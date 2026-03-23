@@ -1,157 +1,108 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 
-const meta: Meta = {
+// Definiamo il tipo per le Props della nostra Story
+interface DesignSystemProps {
+    sampleText: string;
+}
+
+const meta: Meta<DesignSystemProps> = {
     title: "Atoms/DesignSystem",
     parameters: {
-        layout: "padded" // "padded" è meglio per tabelle larghe rispetto a "centered"
+        layout: "padded",
     },
-    tags: ["autodocs"]
+    tags: ["autodocs"],
+    // Qui definiamo i controlli che appariranno nel pannello "Controls"
+    argTypes: {
+        sampleText: {
+            name: "Testo Anteprima",
+            control: "text",
+            description: "Scrivi qui per testare le dimensioni del font",
+        },
+    },
 };
 
 export default meta;
 
-type Story = StoryObj<Record<string, never>>;
+type Story = StoryObj<DesignSystemProps>;
 
 // --- COMPONENTI DI UTILITÀ ---
 
-/**
- * Calcola il valore reale (pixel) di una variabile CSS a runtime
- */
 const ComputedValue = ({ variable }: { variable: string }) => {
     const [val, setVal] = React.useState("...");
-
     React.useEffect(() => {
-        // Un piccolo timeout assicura che il CSS sia stato iniettato da Storybook
         const timer = setTimeout(() => {
             const bodyStyle = window.getComputedStyle(document.body);
             const computed = bodyStyle.getPropertyValue(variable).trim();
             setVal(computed || "non definita");
-        }, 100);
+        }, 150); // Un po' più di respiro per il ricalcolo
         return () => clearTimeout(timer);
     }, [variable]);
-
     return <code>{val}</code>;
-};
-
-/**
- * Mostra lo stato del font attivo nel browser
- */
-const FontInspector = () => {
-    const [info, setInfo] = React.useState({ family: "Loading...", size: "" });
-
-    React.useEffect(() => {
-        const style = window.getComputedStyle(document.body);
-        setInfo({
-            family: style.fontFamily,
-            size: style.fontSize
-        });
-    }, []);
-
-    return (
-        <div style={{
-            marginBottom: '32px',
-            padding: '24px',
-            background: '#f8fafc',
-            border: '1px solid #e2e8f0',
-            borderRadius: '12px'
-        }}>
-            <h2 style={{ marginTop: 0, fontSize: '1.25rem' }}>Stato Tipografia</h2>
-            <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-                <div>
-                    <p style={{ margin: '4px 0' }}><strong>Font Family rilevata:</strong></p>
-                    <code style={{ color: '#d63384', fontSize: '1.1rem' }}>{info.family}</code>
-                </div>
-                <div style={{ flex: 1, paddingLeft: '20px', borderLeft: '2px solid #e2e8f0' }}>
-                    <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase' }}>Anteprima Testo (Nunito)</p>
-                    <p style={{ margin: 0, fontSize: '1.5rem' }}>
-                        Abcdefg 12345 - La volpe veloce salta sul cane pigro.
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
 };
 
 const CustomStyle = () => (
     <style>
         {`
-        .ds-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: inherit;
-            margin-bottom: 40px;
-        }
-        .ds-table th {
-            text-align: left;
-            background: #f1f5f9;
-            padding: 12px 16px;
-            border-bottom: 2px solid #cbd5e1;
-            color: #475569;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .ds-table td {
-            padding: 16px;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: middle;
-        }
-        .token-name {
-            font-weight: bold;
-            color: #d63384;
-            font-family: monospace;
-        }
-        .preview-box {
-            background: #007bff;
-            height: 16px;
-            border-radius: 2px;
-            opacity: 0.7;
-        }
+        .ds-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; font-family: sans-serif; }
+        .ds-table th { text-align: left; background: #f1f5f9; padding: 12px 16px; border-bottom: 2px solid #cbd5e1; color: #475569; font-size: 0.875rem; }
+        .ds-table td { padding: 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        .token-name { font-weight: bold; color: #d63384; font-family: monospace; }
+        .preview-box { background: #007bff; height: 16px; border-radius: 2px; opacity: 0.7; }
         `}
     </style>
 );
 
-// --- STORY RENDER ---
+// --- COMPONENTE PRINCIPALE ---
+// Riceve "sampleText" direttamente dalle Props di Storybook (Controls)
 
-export const Default: Story = {
-    render: () => (
+const DesignSystemShowcase = ({ sampleText }: DesignSystemProps) => {
+    const fontSizes = [
+        { label: "Hero", var: "--font-size-hero" },
+        { label: "H1", var: "--font-size-h1" },
+        { label: "H2", var: "--font-size-h2" },
+        { label: "H3", var: "--font-size-h3" },
+        { label: "H4", var: "--font-size-h4" },
+        { label: "H5", var: "--font-size-h5" },
+        { label: "H6", var: "--font-size-h6" },
+        { label: "Base", var: "--font-size-base" },
+        { label: "Small", var: "--font-size-sm" },
+        { label: "Extra Small", var: "--font-size-xs" },
+    ];
+
+    return (
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <CustomStyle />
 
-            <FontInspector />
+            <h3 style={{ borderLeft: '4px solid #007bff', paddingLeft: '12px', marginBottom: '24px' }}>
+                Typography Scale Table
+            </h3>
 
-            {/* TABELLA TIPOGRAFIA */}
-            <h3 style={{ borderLeft: '4px solid #007bff', paddingLeft: '12px' }}>Font Sizes (Scale)</h3>
             <table className="ds-table">
                 <thead>
                     <tr>
                         <th>Livello</th>
-                        <th>Token / Variabile</th>
-                        <th>Valore (REM/PX)</th>
+                        <th>Variabile</th>
+                        <th>Valore Calcolato</th>
                         <th>Anteprima Visiva</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {[
-                        { label: "Hero", var: "--font-size-hero" },
-                        { label: "H1", var: "--font-size-h1" },
-                        { label: "H2", var: "--font-size-h2" },
-                        { label: "H3", var: "--font-size-h3" },
-                        { label: "H4", var: "--font-size-h4" },
-                        { label: "H5", var: "--font-size-h5" },
-                        { label: "H6", var: "--font-size-h6" },
-                        { label: "Base", var: "--font-size-base" },
-                        { label: "Small", var: "--font-size-sm" },
-                        { label: "Extra Small", var: "--font-size-xs" },
-                    ].map((item) => (
+                    {fontSizes.map((item) => (
                         <tr key={item.var}>
                             <td><strong>{item.label}</strong></td>
                             <td><span className="token-name">{item.var}</span></td>
                             <td><ComputedValue variable={item.var} /></td>
-                            <td>
-                                <span style={{ fontSize: `var(${item.var})`, lineHeight: '1', display: 'block' }}>
-                                    Ag
+                            <td style={{ maxWidth: '400px' }}>
+                                <span style={{
+                                    fontSize: `var(${item.var})`,
+                                    lineHeight: '1.2',
+                                    display: 'block',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis'
+                                }}>
+                                    {sampleText}
                                 </span>
                             </td>
                         </tr>
@@ -159,8 +110,9 @@ export const Default: Story = {
                 </tbody>
             </table>
 
-            {/* TABELLA SPACING */}
-            <h3 style={{ borderLeft: '4px solid #007bff', paddingLeft: '12px' }}>Spacing System</h3>
+            <h3 style={{ borderLeft: '4px solid #007bff', paddingLeft: '12px', marginTop: '40px' }}>
+                Spacing System
+            </h3>
             <table className="ds-table">
                 <thead>
                     <tr>
@@ -184,5 +136,15 @@ export const Default: Story = {
                 </tbody>
             </table>
         </div>
-    ),
+    );
+};
+
+// --- CONFIGURAZIONE STORY ---
+
+export const Default: Story = {
+    // Passiamo i valori di default per i controlli
+    args: {
+        sampleText: "Nunito Font Preview",
+    },
+    render: (args) => <DesignSystemShowcase {...args} />,
 };
