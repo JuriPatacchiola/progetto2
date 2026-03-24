@@ -11,17 +11,36 @@ const meta: Meta<typeof Badge> = {
 
 export default meta;
 
-// CORREZIONE: Il tipo deve essere riferito al componente, non al meta
 type Story = StoryObj<typeof Badge>;
 
+// 1. Storia di base
 export const Default: Story = {
     args: {
-        children: "Badge", // Passiamo il testo come prop children
+        children: "Badge",
+        variant: "neutral",
     },
 };
 
+// 2. Storia con testo lungo
 export const Lungo: Story = {
     args: {
         children: "Testo del badge molto più lungo per testare lo spazio",
     },
+};
+
+// --- QUESTA È LA PARTE DA SOSTITUIRE/AGGIUNGERE ---
+// 3. Storia "Galleria" per vederli tutti insieme e testare l'hover
+export const Galleria: Story = {
+    render: () => (
+        <div style={{
+            display: 'flex',
+            gap: '16px',
+            alignItems: 'center',
+            padding: '20px'
+        }}>
+            <Badge variant="neutral">Neutral</Badge>
+            <Badge variant="negative">Negative</Badge>
+            <Badge variant="positive">Positive</Badge>
+        </div>
+    ),
 };

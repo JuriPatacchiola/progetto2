@@ -1,8 +1,16 @@
-import type React from "react"
-import "../Badge/Badge.css"
+import type React from "react";
+import "../Badge/Badge.css";
 
-export const Badge: React.FC<{ children: React.ReactNode }> = ({
+// Definiamo i tipi di varianti possibili
+interface BadgeProps {
+    children: React.ReactNode;
+    variant?: 'neutral' | 'negative' | 'positive';
+}
+
+export const Badge: React.FC<BadgeProps> = ({
     children,
+    variant = 'neutral', // Valore di default
 }) => {
-    return <div className="badge">{children}</div>
+    // Uniamo la classe base "badge" con quella specifica della variante
+    return <div className={`badge badge--${variant}`}>{children}</div>
 }

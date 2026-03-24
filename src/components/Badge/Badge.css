@@ -1,5 +1,43 @@
+/* Badge.css */
+
 .badge {
-    background-color: blue;
-    color: white;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 999px;
+    font-size: var(--font-size-h5);
+    font-weight: bold;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    /* Forza il testo scuro per TUTTI i badge come nell'immagine */
+    color: var(--gray-950);
+}
+
+/* Variante NEUTRAL (Grigio) */
+.badge--neutral {
+    background-color: var(--gray-200);
+}
+
+.badge--neutral:hover {
+    background-color: var(--gray-300);
+}
+
+/* Variante NEGATIVE (Rosso) */
+.badge--negative {
+    background-color: var(--red-200);
+}
+
+.badge--negative:hover {
+    background-color: var(--red-300);
+}
+
+/* Variante POSITIVE (Verde) */
+.badge--positive {
+    background-color: var(--green-200);
+}
+
+.badge--positive:hover {
+    background-color: var(--green-300);
 }
