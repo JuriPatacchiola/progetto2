@@ -13,7 +13,7 @@ export default meta;
 
 type Story = StoryObj<typeof Badge>;
 
-// 1. Storia di base
+
 export const Default: Story = {
     args: {
         children: "Badge",
@@ -21,15 +21,14 @@ export const Default: Story = {
     },
 };
 
-// 2. Storia con testo lungo
+
 export const Lungo: Story = {
     args: {
         children: "Testo del badge molto più lungo per testare lo spazio",
     },
 };
 
-// --- QUESTA È LA PARTE DA SOSTITUIRE/AGGIUNGERE ---
-// 3. Storia "Galleria" per vederli tutti insieme e testare l'hover
+
 export const Galleria: Story = {
     render: () => (
         <div style={{

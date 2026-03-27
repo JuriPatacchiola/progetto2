@@ -9,8 +9,7 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({
     children,
-    variant = 'neutral', // Valore di default
+    variant = 'neutral',
 }) => {
-    // Uniamo la classe base "badge" con quella specifica della variante
     return <div className={`badge badge--${variant}`}>{children}</div>
 }

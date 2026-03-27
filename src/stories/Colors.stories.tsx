@@ -8,10 +8,9 @@ export default meta
 type Story = StoryObj<typeof meta>;
 export const primary: Story = {
     render: () => {
-        // Definiamo i pesi che abbiamo nel :root
+
         const weights = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 
-        // Definiamo le palette che vogliamo mostrare
         const palettes = [
             { name: "Gray", prefix: "gray" },
             { name: "Red", prefix: "red" },
@@ -64,9 +63,9 @@ export const primary: Story = {
                                     key={`${palette.prefix}-${weight}`}
                                     className="color-swatch"
                                     style={{
-                                        // Applichiamo la variabile CSS dinamica
+
                                         backgroundColor: `var(--${palette.prefix}-${weight})`,
-                                        // Cambiamo colore del testo in base alla luminosità
+
                                         color: weight > 500 ? 'white' : 'black'
                                     }}
                                 >

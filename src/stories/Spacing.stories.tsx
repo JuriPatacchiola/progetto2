@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 
-// Definiamo il tipo per le Props della nostra Story
+
 interface DesignSystemProps {
     sampleText: string;
 }
@@ -12,7 +12,7 @@ const meta: Meta<DesignSystemProps> = {
         layout: "padded",
     },
     tags: ["autodocs"],
-    // Qui definiamo i controlli che appariranno nel pannello "Controls"
+
     argTypes: {
         sampleText: {
             name: "Testo Anteprima",
@@ -26,7 +26,7 @@ export default meta;
 
 type Story = StoryObj<DesignSystemProps>;
 
-// --- COMPONENTI DI UTILITÀ ---
+
 
 const ComputedValue = ({ variable }: { variable: string }) => {
     const [val, setVal] = React.useState("...");
@@ -35,7 +35,7 @@ const ComputedValue = ({ variable }: { variable: string }) => {
             const bodyStyle = window.getComputedStyle(document.body);
             const computed = bodyStyle.getPropertyValue(variable).trim();
             setVal(computed || "non definita");
-        }, 150); // Un po' più di respiro per il ricalcolo
+        }, 150);
         return () => clearTimeout(timer);
     }, [variable]);
     return <code>{val}</code>;
@@ -53,8 +53,7 @@ const CustomStyle = () => (
     </style>
 );
 
-// --- COMPONENTE PRINCIPALE ---
-// Riceve "sampleText" direttamente dalle Props di Storybook (Controls)
+
 
 const DesignSystemShowcase = ({ sampleText }: DesignSystemProps) => {
     const fontSizes = [
@@ -139,10 +138,10 @@ const DesignSystemShowcase = ({ sampleText }: DesignSystemProps) => {
     );
 };
 
-// --- CONFIGURAZIONE STORY ---
+
 
 export const Default: Story = {
-    // Passiamo i valori di default per i controlli
+
     args: {
         sampleText: "Nunito Font Preview",
     },
