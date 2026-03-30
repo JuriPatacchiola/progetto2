@@ -71,3 +71,24 @@ export default defineConfig([
   },
 ])
 ```
+Surprising truth about pixels and accessibility:
+https://pimpmytype.com/pixels-accessibility/
+
+Understanding linear scale:
+https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+
+Fluid dimension calculator:
+https://fluid.style/spacing
+
+Vertical Rhythm:
+https://24ways.org/2006/compose-to-a-vertical-rhythm/
+
+Modular scale:
+https://www.modularscale.com/
+
+Accessibilità delle Tab (WAI-ARIA)
+Tab accessibility (W3C Patterns):
+https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+
+Tab accessibility guide:
+https://accessibilitymadeeasy.org/accessible-tabs-a-step-by-step-guide/
