@@ -1,3 +1,4 @@
+import React from "react";
 import { useTabsContext } from "./Tabs.Context";
 
 type ButtonProps = {
@@ -7,6 +8,7 @@ type ButtonProps = {
 
 export const Button: React.FC<ButtonProps> = ({ children, tabId }) => {
     const { activeTab, setActiveTab } = useTabsContext();
+    const [focusable, setFocusable] = React.useState(activeTab == tabId)
     return (
         <button
             role="tab"
@@ -16,6 +18,9 @@ export const Button: React.FC<ButtonProps> = ({ children, tabId }) => {
             aria-controls={tabId}
             aria-selected={activeTab == tabId}
             id={`button-${tabId}`}
+            tabIndex={focusable ? 0 : -1}
+            onFocus={() => setFocusable(true)}
+            onBlur={() => setFocusable(activeTab == tabId)}
         >
             {children}
         </button>
