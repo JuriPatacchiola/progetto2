@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import * as ReactShadow from "react-shadow";
 import { GlobalStyles } from "../GlobalStyles";
-import { Tab } from "./Tab.tab";
+import { Tab } from "./Tab.Tab";
 import { TabsContext } from "./Tabs.Context";
 import css from "./Tabs.css?raw";
 import { Item, type ItemProps } from "./Tabs.item";
@@ -38,7 +38,7 @@ export const Tabs: React.FC<TabsProps> & { Item: typeof Item } = ({
     return (
         <TabsContext.Provider value={{ activeTab, setActiveTab }}>
             {/* Creazione dello Shadow DOM */}
-            <root.div role="tablist">
+            <root.div role="tablist" data-testid="tabs-root">
                 {/* IMPORTANTE: Inseriamo GlobalStyles e il CSS delle Tab 
                    dentro la root per superare l'isolamento dello Shadow DOM 
                 */}
