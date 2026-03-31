@@ -1,10 +1,10 @@
 import React from "react";
 
 export type ItemProps = {
-    label: string;
+    label: React.ReactNode; // Permette stringhe, span, badge, ecc.
     children: React.ReactNode;
 };
 
 export const Item: React.FC<ItemProps> = ({ children }) => {
-    return <div>{children}</div>;
+    return <>{children}</>;
 };

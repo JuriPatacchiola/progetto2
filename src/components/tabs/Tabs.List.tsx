@@ -1,4 +1,4 @@
-import type React from "react";
+import React from "react";
 import { Button } from "./Tabs.Button";
 
 type TabListProp = {
@@ -8,48 +8,40 @@ type TabListProp = {
     }[];
 }
 
-
-
 export const List: React.FC<TabListProp> = ({ tabsLabels }) => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         const buttons = Array.from(
-            event.currentTarget.querySelectorAll("button[role= 'tab']")
-        );
-        const currentIndex = buttons.findIndex((button) => button == event.target);
+            event.currentTarget.querySelectorAll("button[role='tab']")
+        ) as HTMLButtonElement[];
+
+        const currentIndex = buttons.findIndex((button) => button === event.target);
         let newIndex = currentIndex;
+
         switch (event.key) {
-            case "Home":
-                newIndex = 0;
-                break;
-            case "arrowRight":
-            case "arrowUp":
+            case "Home": newIndex = 0; break;
+            case "End": newIndex = buttons.length - 1; break;
+            case "ArrowRight":
+            case "ArrowUp":
                 newIndex = (currentIndex + 1) % buttons.length;
                 break;
-            case "End":
-                newIndex = buttons.length - 1;
-                break;
-            case "arrowLeft":
-            case "arrowDown":
+            case "ArrowLeft":
+            case "ArrowDown":
                 newIndex = (currentIndex - 1 + buttons.length) % buttons.length;
                 break;
+            default: return; // Esci se non è un tasto di navigazione
         }
-        const next = buttons[newIndex] as HTMLButtonElement;
-        next?.focus();
+
+        buttons[newIndex]?.focus();
         event.preventDefault();
     }
+
     return (
-        <div
-            className="tablist"
-            onKeyDownCapture={handleKeyDown}
-        >
+        <div className="tablist" onKeyDownCapture={handleKeyDown}>
             {tabsLabels.map(({ label, tabId }) => (
-                <Button
-                    key={tabId}
-                    tabId={tabId}
-                >
+                <Button key={tabId} tabId={tabId}>
                     {label}
                 </Button>
             ))}
         </div>
-    )
+    );
 }

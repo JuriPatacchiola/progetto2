@@ -1,21 +1,17 @@
 import React from "react";
+// @ts-ignore
+import * as ReactShadow from "react-shadow";
+import { GlobalStyles } from "../GlobalStyles";
 import { Tab } from "./Tab.tab";
 import { TabsContext } from "./Tabs.Context";
-import { Item } from "./Tabs.item";
+import css from "./Tabs.css?raw";
+import { Item, type ItemProps } from "./Tabs.item";
 import { List } from "./Tabs.List";
-
-export type ItemProps = {
-    label: string;
-    children: React.ReactNode;
-};
 
 type TabsProps = {
     children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-/**
- * QUESTA TI MANCAVA (è nello screenshot implicita)
- */
 const isTabValidChildren = (
     child: any
 ): child is React.ReactElement<ItemProps> => {
@@ -27,43 +23,36 @@ export const Tabs: React.FC<TabsProps> & { Item: typeof Item } = ({
 }) => {
     const id = React.useId();
     const [activeTab, setActiveTab] = React.useState(id + "0");
-    const validChildren =
-        React.Children.toArray(children).filter(isTabValidChildren)
-            .map((child, i) => ({ ...child, id: id + i }));
 
-    const tabsLabels = validChildren.map(
-        (child) => ({
-            label: (child.props as unknown as ItemProps).label,
-            tabId: child.id
-        }));
+    const validChildren = React.Children.toArray(children)
+        .filter(isTabValidChildren)
+        .map((child, i) => ({ ...child, id: id + i }));
 
-    if (validChildren.length !== React.Children.count(children)) {
-        console.warn("Invalid children for Tabs");
-    }
+    const tabsLabels = validChildren.map((child) => ({
+        label: (child.props as ItemProps).label, // Cast alle props corrette
+        tabId: child.id,
+    }));
+
+    const root = (ReactShadow as any).default || ReactShadow;
 
     return (
         <TabsContext.Provider value={{ activeTab, setActiveTab }}>
-            <div role="tablist">
+            <root.div role="tablist">
+                <GlobalStyles />
+                <style>{css}</style>
                 <List tabsLabels={tabsLabels} />
 
-                {validChildren.map(({ id, ...child }) => {
-                    return (
-                        <Tab
-                            id={id}
-                            key={id}
-                        >
-                            {child}
-                        </Tab>
-                    );
-                })}
+                {validChildren.map(({ id, props }) => (
+                    <Tab id={id} key={id}>
+                        {props.children}
+                    </Tab>
+                ))}
+
                 {React.Children.map(children, (child) => {
-                    if (!isTabValidChildren(child)) {
-                        return child
-                    }
+                    if (!isTabValidChildren(child)) return child;
                     return null;
                 })}
-
-            </div>
+            </root.div>
         </TabsContext.Provider>
     );
 };

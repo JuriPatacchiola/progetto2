@@ -17,7 +17,7 @@ type Story = StoryObj<typeof Badge>;
 export const Default: Story = {
     args: {
         children: "Badge",
-        variant: "neutral",
+        variant: "positive",
     },
 };
 

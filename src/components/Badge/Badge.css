@@ -1,43 +1,25 @@
-/* Badge.css */
-
 .badge {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-neutral-bcg);
+    color: var(--color-neutral-text);
+    /* Testo variabile Neutral */
+    font-size: var(--font-size-xs);
+    border-radius: 100vw;
+    font-weight: 800;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: 999px;
-    font-size: var(--font-size-h5);
-    font-weight: bold;
-    transition: all 0.2s ease;
-    cursor: pointer;
-
-    /* Forza il testo scuro per TUTTI i badge come nell'immagine */
-    color: var(--gray-950);
+    line-height: 1;
 }
 
-/* Variante NEUTRAL (Grigio) */
-.badge--neutral {
-    background-color: var(--gray-200);
+/* Quando è positive, cambia SIA sfondo SIA testo */
+.badge:is(.positive) {
+    background-color: var(--color-positive-bcg);
+    color: var(--color-positive-text);
 }
 
-.badge--neutral:hover {
-    background-color: var(--gray-300);
-}
-
-/* Variante NEGATIVE (Rosso) */
-.badge--negative {
-    background-color: var(--red-200);
-}
-
-.badge--negative:hover {
-    background-color: var(--red-300);
-}
-
-/* Variante POSITIVE (Verde) */
-.badge--positive {
-    background-color: var(--green-200);
-}
-
-.badge--positive:hover {
-    background-color: var(--green-300);
+/* Quando è negative, cambia SIA sfondo SIA testo */
+.badge:is(.negative) {
+    background-color: var(--color-negative-bcg);
+    color: var(--color-negative-text);
 }
