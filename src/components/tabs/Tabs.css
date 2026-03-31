@@ -4,44 +4,54 @@
     margin-bottom: var(--spacing-md);
 }
 
-/* --- Regole per i pulsanti delle Tab --- */
+/* --- Pulsanti delle Tab --- */
 [role="tab"] {
     cursor: pointer;
-    /* Usa un bordo che si adatta al tema */
     border: 1px solid var(--color-neutral-accent);
     background-color: transparent;
     color: var(--color-neutral-text);
     font-size: var(--font-size-base);
-    /* Meglio usare la variabile font-size */
     font-weight: 800;
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: 100vw;
     min-height: calc(42rem / 16);
     transition: all var(--timing-fast) ease-in-out;
     outline: none;
-    /* Rimuoviamo l'outline standard per gestirlo noi */
 
-    /* HOVER: Usiamo light-dark per evitare l'effetto "macchia bianca" in dark mode */
     &:hover {
         background-color: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
     }
 
-    /* FOCUS: Quando ti sposti con le frecce, aggiungiamo un bordo evidente invece di coprire tutto */
     &:focus-visible {
         box-shadow: 0 0 0 2px var(--color-neutral-text);
     }
 
-    /* SELEZIONATO: Invertiamo i colori usando le variabili del prof */
     &[aria-selected="true"] {
         background-color: var(--color-neutral-text);
-        /* In dark diventa bianco, in light nero */
         border-color: transparent;
         color: var(--color-neutral-bcg);
-        /* In dark diventa nero, in light bianco */
     }
 }
 
-/* --- Animazione e Panel (Invariati) --- */
+/* --- Rettangoli del Contenuto (I tuoi rettangolini) --- */
+/* Applichiamo lo stile sia al container che ai div dentro il panel */
+[role="tabpanel"] {
+    animation: fadeIn var(--timing-fast) ease-in-out;
+    color: var(--color-neutral-text);
+}
+
+.tab-content-container,
+[role="tabpanel"]>div {
+    /* Questa variabile ora userà il grigio spento in Dark Mode */
+    background-color: var(--color-surface-1);
+    padding: var(--spacing-md);
+    border-radius: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    min-height: 50px;
+    /* Per vederli bene come nello screenshot */
+}
+
+/* --- Animazione --- */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -54,6 +64,13 @@
     }
 }
 
-[role="tabpanel"] {
-    animation: fadeIn var(--timing-fast) ease-in-out;
+.tab-content-container {
+    /* In Light mode sarà grigio chiaro, in Dark mode grigio molto scuro */
+    background-color: var(--color-surface-1);
+    color: var(--color-neutral-text);
+    padding: var(--spacing-md);
+    border-radius: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    min-height: 50px;
+    transition: background-color var(--timing-fast) ease-in-out;
 }

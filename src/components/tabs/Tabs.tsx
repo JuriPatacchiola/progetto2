@@ -29,7 +29,7 @@ export const Tabs: React.FC<TabsProps> & { Item: typeof Item } = ({
         .map((child, i) => ({ ...child, id: id + i }));
 
     const tabsLabels = validChildren.map((child) => ({
-        label: (child.props as ItemProps).label, // Cast alle props corrette
+        label: (child.props as ItemProps).label,
         tabId: child.id,
     }));
 
@@ -37,14 +37,24 @@ export const Tabs: React.FC<TabsProps> & { Item: typeof Item } = ({
 
     return (
         <TabsContext.Provider value={{ activeTab, setActiveTab }}>
+            {/* Creazione dello Shadow DOM */}
             <root.div role="tablist">
+                {/* IMPORTANTE: Inseriamo GlobalStyles e il CSS delle Tab 
+                   dentro la root per superare l'isolamento dello Shadow DOM 
+                */}
                 <GlobalStyles />
                 <style>{css}</style>
+
                 <List tabsLabels={tabsLabels} />
 
                 {validChildren.map(({ id, props }) => (
                     <Tab id={id} key={id}>
-                        {props.children}
+                        {/* Avvolgiamo il contenuto in questo div specifico 
+                           che userà var(--color-surface-1) definita nel tuo CSS 
+                        */}
+                        <div className="tab-content-container">
+                            {props.children}
+                        </div>
                     </Tab>
                 ))}
 

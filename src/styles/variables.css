@@ -24,7 +24,7 @@ html {
     --font-size-sm: 0.875rem;
     --font-size-xs: 0.75rem;
 
-    /* 4. PALETTE COLORI (Scale Primitive) */
+    /* 4. SCALA DEI GRIGI (Scale Primitive) */
     --gray-50: #f9fafb;
     --gray-100: #f3f4f6;
     --gray-200: #e5e7eb;
@@ -37,22 +37,36 @@ html {
     --gray-900: #111827;
     --gray-950: #030712;
 
+    /* 5. SCALA DEI ROSSI */
     --red-50: #fef2f2;
     --red-100: #fee2e2;
     --red-200: #fecaca;
+    --red-300: #fca5a5;
+    --red-400: #f87171;
+    --red-500: #ef4444;
+    --red-600: #dc2626;
+    --red-700: #b91c1c;
+    --red-800: #991b1b;
     --red-900: #7f1d1d;
 
+    /* 6. SCALA DEI VERDI */
     --green-50: #f0fdf4;
     --green-100: #dcfce7;
     --green-200: #bbf7d0;
+    --green-300: #86efac;
+    --green-400: #4ade80;
+    --green-500: #22c55e;
+    --green-600: #16a34a;
+    --green-700: #15803d;
+    --green-800: #166534;
     --green-900: #14532d;
 
-    /* 5. TIMING ANIMAZIONI */
+    /* 7. TIMING ANIMAZIONI */
     --timing: 1s;
     --timing-fast: calc(var(--timing) * 0.15);
     --timing-slow: calc(var(--timing) * 2);
 
-    /* 6. COLORI SEMANTICI (Logica light-dark come il docente) */
+    /* 8. COLORI SEMANTICI (Logica light-dark) */
 
     /* Negative (Rosso) */
     --color-negative-bcg: light-dark(var(--red-100), var(--red-900));
@@ -68,24 +82,28 @@ html {
     --color-neutral-text: light-dark(var(--gray-900), var(--gray-100));
     --color-neutral-accent: light-dark(var(--gray-700), var(--gray-400));
 
-    /* Variabile specifica per lo sfondo dei pannelli (per staccare dal background) */
+    /* --- LA TUA RICHIESTA ---
+       Variabile per i rettangoli (Tab content / Skeleton):
+       In Light Mode: --gray-200 (grigio chiaro, più scuro del body)
+       In Dark Mode: --gray-900 (grigio molto spento, quasi nero)
+    */
     --color-surface-1: light-dark(var(--gray-200), var(--gray-900));
 
-    /* Alias per compatibilità Badge docente */
+    /* Alias per compatibilità componenti */
     --color-gray-1: var(--color-neutral-bcg);
     --color-gray-15: var(--color-neutral-text);
     --color-green-2: var(--color-positive-bcg);
     --color-red-2: var(--color-negative-bcg);
 }
 
-/* 7. RIDUZIONE MOVIMENTO */
+/* 9. RIDUZIONE MOVIMENTO */
 @media(prefers-reduced-motion: reduce) {
     :root {
         --timing: 0s;
     }
 }
 
-/* 8. COLLEGAMENTO STORYBOOK -> BROWSER */
+/* 10. COLLEGAMENTO STORYBOOK -> BROWSER (Classi applicate dall'addon) */
 :root.light {
     color-scheme: light;
 }
@@ -94,9 +112,11 @@ html {
     color-scheme: dark;
 }
 
-/* 9. STILE BODY (Sfondo globale Storybook) */
+/* 11. STILE BODY (Sfondo globale della pagina) */
 body {
-    /* Usiamo il grigio più chiaro in assoluto come sfondo pagina */
+    /* In Light Mode lo sfondo è il più chiaro (gray-50), 
+       così il rettangolo (gray-200) risalta bene.
+    */
     background-color: light-dark(var(--gray-50), var(--gray-950));
     color: var(--color-neutral-text);
     margin: 0;
