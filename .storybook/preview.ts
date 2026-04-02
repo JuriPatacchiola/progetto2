@@ -13,14 +13,24 @@ const preview: Preview = {
                 date: /Date$/i,
             },
         },
+
+        // Disabilita background automatici di Storybook
+        backgrounds: {
+            disable: true,
+        },
+
+        docs: {
+            canvas: {
+                withToolbar: true,
+            },
+        },
     },
+
     decorators: [
-        // Questo decorator aggiunge una classe (es. .light o .dark) 
-        // all'elemento che avvolge la tua storia in Storybook.
         withThemeByClassName({
             themes: {
-                light: "light-theme", // La classe CSS per il tema chiaro
-                dark: "dark-theme",   // La classe CSS per il tema scuro
+                light: "light-theme",
+                dark: "dark-theme",
             },
             defaultTheme: "light",
             parentSelector: "body",
